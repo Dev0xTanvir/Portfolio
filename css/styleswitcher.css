@@ -167,7 +167,7 @@
     font-weight: 500;
     display: block;
     text-align: center;
-	    margin-top: 25px;
+	margin-top: 25px;
 }
 @media only screen and (max-width: 991px) {
 	#switcher {
@@ -180,8 +180,8 @@
 }
 
 #switcher .dark_switch {
-	    margin-top: 5px;
-		opacity: 1;
+	margin-top: 5px;
+	opacity: 1;
     left: 0;
 }
 #switcher .purchase {
