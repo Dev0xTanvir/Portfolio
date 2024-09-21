@@ -578,11 +578,11 @@
   transform: rotate(140.4deg);
 }
 .c100.p40 .bar {
-  -webkit-transform: rotate(144deg);
-  -moz-transform: rotate(144deg);
-  -ms-transform: rotate(144deg);
-  -o-transform: rotate(144deg);
-  transform: rotate(144deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 .c100.p41 .bar {
   -webkit-transform: rotate(147.6deg);
@@ -613,11 +613,11 @@
   transform: rotate(158.4deg);
 }
 .c100.p45 .bar {
-  -webkit-transform: rotate(162deg);
-  -moz-transform: rotate(162deg);
-  -ms-transform: rotate(162deg);
-  -o-transform: rotate(162deg);
-  transform: rotate(162deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 .c100.p46 .bar {
   -webkit-transform: rotate(165.6deg);
@@ -753,11 +753,11 @@
   transform: rotate(230.4deg);
 }
 .c100.p65 .bar {
-  -webkit-transform: rotate(234deg);
-  -moz-transform: rotate(234deg);
-  -ms-transform: rotate(234deg);
-  -o-transform: rotate(234deg);
-  transform: rotate(234deg);
+  -webkit-transform: rotate(280deg);
+  -moz-transform: rotate(280deg);
+  -ms-transform: rotate(280deg);
+  -o-transform: rotate(280deg);
+  transform: rotate(280deg);
 }
 .c100.p66 .bar {
   -webkit-transform: rotate(237.6deg);
@@ -788,11 +788,11 @@
   transform: rotate(248.4deg);
 }
 .c100.p70 .bar {
-  -webkit-transform: rotate(252deg);
-  -moz-transform: rotate(252deg);
-  -ms-transform: rotate(252deg);
-  -o-transform: rotate(252deg);
-  transform: rotate(252deg);
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
 }
 .c100.p71 .bar {
   -webkit-transform: rotate(255.6deg);
@@ -823,18 +823,18 @@
   transform: rotate(266.40000000000003deg);
 }
 .c100.p75 .bar {
-  -webkit-transform: rotate(270deg);
-  -moz-transform: rotate(270deg);
-  -ms-transform: rotate(270deg);
-  -o-transform: rotate(270deg);
-  transform: rotate(270deg);
+  -webkit-transform: rotate(300deg);
+  -moz-transform: rotate(300deg);
+  -ms-transform: rotate(300deg);
+  -o-transform: rotate(300deg);
+  transform: rotate(300deg);
 }
 .c100.p76 .bar {
   -webkit-transform: rotate(273.6deg);
   -moz-transform: rotate(273.6deg);
   -ms-transform: rotate(273.6deg);
   -o-transform: rotate(273.6deg);
-  transform: rotate(273.6deg);
+  transform: rotate(273.6deg)
 }
 .c100.p77 .bar {
   -webkit-transform: rotate(277.2deg);
@@ -858,11 +858,11 @@
   transform: rotate(284.40000000000003deg);
 }
 .c100.p80 .bar {
-  -webkit-transform: rotate(288deg);
-  -moz-transform: rotate(288deg);
-  -ms-transform: rotate(288deg);
-  -o-transform: rotate(288deg);
-  transform: rotate(288deg);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  transform: rotate(360deg);
 }
 .c100.p81 .bar {
   -webkit-transform: rotate(291.6deg);
@@ -928,11 +928,11 @@
   transform: rotate(320.40000000000003deg);
 }
 .c100.p90 .bar {
-  -webkit-transform: rotate(324deg);
-  -moz-transform: rotate(324deg);
-  -ms-transform: rotate(324deg);
-  -o-transform: rotate(324deg);
-  transform: rotate(324deg);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  transform: rotate(360deg);
 }
 .c100.p91 .bar {
   -webkit-transform: rotate(327.6deg);
