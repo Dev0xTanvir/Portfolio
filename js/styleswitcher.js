@@ -1,218 +1,191 @@
-/**	STYLE SWITCHER
-*************************************************** **/
-jQuery(document).ready(function() {
-	"use strict";
+// /**	STYLE SWITCHER
+// *************************************************** **/
+document.addEventListener("DOMContentLoaded", () => {
+  "use strict";
 
-    jQuery("#hideSwitcher, #showSwitcher").click(function () {
+  const hideSwitcher = document.getElementById("hideSwitcher");
+  const showSwitcher = document.getElementById("showSwitcher");
+  const switcher = document.getElementById("switcher");
 
-        if (jQuery("#showSwitcher").is(":visible")) {
+  const animateHide = (el, callback) => {
+    el.style.transition = "margin-left 0.5s";
+    el.style.marginLeft = "-500px";
+    setTimeout(() => {
+      el.style.display = "none";
+      if (callback) callback();
+    }, 500);
+  };
 
-			var _identifier = "#showSwitcher";
-            jQuery("#switcher").animate({"margin-left": "0px"}, 500).show();
-			createCookie("switcher_visible", 'true', 365);
+  const animateShow = (el) => {
+    el.style.display = "block";
+    el.style.transition = "margin-left 0.5s";
+    el.style.marginLeft = "0px";
+  };
 
+  [hideSwitcher, showSwitcher].map((button) => {
+    if (button) {
+      button.addEventListener("click", () => {
+        if (showSwitcher && showSwitcher.style.display !== "none") {
+          animateShow(switcher);
+          createCookie("switcher_visible", "true", 365);
+          animateHide(showSwitcher);
         } else {
-
-			var _identifier = "#switcher";
-            jQuery("#showSwitcher").show().animate({"margin-left": "0"}, 500);
-			createCookie("switcher_visible", 'false', 365);
-
+          animateShow(showSwitcher);
+          createCookie("switcher_visible", "false", 365);
+          animateHide(switcher);
         }
+      });
+    }
+  });
 
-		jQuery(_identifier).animate({"margin-left": "-500px"}, 500, function () {
-			jQuery(this).hide();
-		});
-
-    });
-
-	// REMOVE # FROM URL
-	$("a[href='#']").on("click", (function(e) {
-		e.preventDefault();
-	}));
-                      
+  document.querySelectorAll("a[href='#']").map((a) => {
+    a.addEventListener("click", (e) => e.preventDefault());
+  });
 });
 
 function setActiveStyleSheet(title) {
-	var i, a, main;
-	for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
-		if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
-			a.disabled = true;
-			if(a.getAttribute("title") == title) { a.disabled = false; }
-		}
-	}
+  const links = document.getElementsByTagName("link");
+  for (let link of links) {
+    if (link.rel.includes("style") && link.title) {
+      link.disabled = true;
+      if (link.title === title) {
+        link.disabled = false;
+      }
+    }
+  }
 
-	// DARK SKIN
-	var color_skin = readCookie('color_skin');
-	if(color_skin == 'dark') {
-		jQuery("#css_dark_skin").remove();
-		jQuery("head").append('<link id="css_dark_skin" href="assets/css/layout-dark.css" rel="stylesheet" type="text/css" title="dark" />');
-		jQuery("#is_dark").trigger('click');
-		jQuery("a.logo img").attr('src', 'assets/images/logo_dark.png');
-	}
+  const color_skin = readCookie("color_skin");
+  if (color_skin === "dark") {
+    const existing = document.getElementById("css_dark_skin");
+    if (existing) existing.remove();
+
+    const link = document.createElement("link");
+    link.id = "css_dark_skin";
+    link.href = "assets/css/layout-dark.css";
+    link.rel = "stylesheet";
+    link.type = "text/css";
+    link.title = "dark";
+    document.head.appendChild(link);
+
+    document.getElementById("is_dark")?.click();
+    const logo = document.querySelector("a.logo img");
+    if (logo) logo.src = "assets/images/logo_dark.png";
+  }
 }
 
 function getActiveStyleSheet() {
-	var i, a;
-	for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
-		if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title") && !a.disabled) { return a.getAttribute("title"); }
-	}
-
-	return null;
+  const links = document.getElementsByTagName("link");
+  for (let link of links) {
+    if (link.rel.includes("style") && link.title && !link.disabled) {
+      return link.title;
+    }
+  }
+  return null;
 }
 
 function getPreferredStyleSheet() {
-	var i, a;
-	for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
-		if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("rel").indexOf("alt") == -1 && a.getAttribute("title")) {
-			return a.getAttribute("title");
-		}
-	}
-
-	return null;
+  const links = document.getElementsByTagName("link");
+  for (let link of links) {
+    if (link.rel.includes("style") && !link.rel.includes("alt") && link.title) {
+      return link.title;
+    }
+  }
+  return null;
 }
 
-function createCookie(name,value,days) {
-	if (days) {
-		var date = new Date();
-		date.setTime(date.getTime()+(days*24*60*60*1000));
-		var expires = "; expires="+date.toGMTString();
-	} else {
-		expires = "";
-	}	document.cookie = name+"="+value+expires+";";
+function createCookie(name, value, days) {
+  let expires = "";
+  if (days) {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 86400000);
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = `${name}=${value}${expires}; path=/`;
 }
 
 function readCookie(name) {
-	var nameEQ = name + "=";
-	var ca = document.cookie.split(';');
-	for(var i=0;i < ca.length;i++) {
-		var c = ca[i];
-
-		while (c.charAt(0)==' ') {
-			c = c.substring(1,c.length);
-		}
-
-		if (c.indexOf(nameEQ) == 0) {
-			return c.substring(nameEQ.length,c.length);
-		}
-	}
-
-	return null;
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(";");
+  for (let c of ca) {
+    c = c.trim();
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+  }
+  return null;
 }
 
+// ========== ON LOAD ==========
+let switcher_visible = "";
+window.onload = () => {
+  const cookie = readCookie("style");
+  const title = cookie || getPreferredStyleSheet();
+  setActiveStyleSheet(title);
 
-/** ********************************************************************************************************** **/
-/** ********************************************************************************************************** **/
-/** ********************************************************************************************************** **/
+  if (switcher_visible !== "false") {
+    document.getElementById("showSwitcher")?.click();
+  }
 
-/**
-	@ON LOAD
-**/
-var switcher_visible = '';
-window.onload = function(e) {
+  const is_dark = readCookie("is_light");
+  if (readCookie("is_boxed") === "true") {
+    document.body.classList.remove("light");
+    document.body.classList.add("light");
+    document.getElementById("is_light")?.click();
+  }
+};
 
-	// COLOR SCHEME
-	var cookie = readCookie("style");
-	var title = cookie ? cookie : getPreferredStyleSheet();
-	setActiveStyleSheet(title);
-
-	// SWITCHER OPEN|CLOSED
-	if(switcher_visible != 'false') {
-		jQuery("#showSwitcher").trigger('click');
-	}
-
-	// DARK OR LIGHT
-	var is_dark = readCookie('is_light');
-	if(is_boxed == 'true') {
-		jQuery('light').removeClass('light');
-		jQuery('light').addClass('light');
-		jQuery("#is_light").trigger('click');
-	}
-
-}
-
-
-/**
-	COLOR SKIN [light|dark]
-**/
-jQuery("input.dark_switch").bind("click", function() {
-	var boxed_switch = jQuery(this).attr('value');
-
-	if(boxed_switch == 'light') {
-		jQuery("body").removeClass('dark');
-		jQuery("body").addClass('light');
-	} else {
-
-		jQuery("body").removeClass('light');
-		jQuery("body").addClass('dark');
-	}
+// ========== DARK/LIGHT MODE ==========
+document.querySelectorAll("input.dark_switch").map((input) => {
+  input.addEventListener("click", () => {
+    const val = input.value;
+    document.body.classList.remove("dark", "light");
+    document.body.classList.add(val);
+  });
 });
 
-
-
-
-
-/**
-	LAYOUT STYLE [wide|boxed]
-**/
-jQuery("input.boxed_switch").bind("click", function() {
-	var boxed_switch = jQuery(this).attr('value');
-
-	if(boxed_switch == 'boxed') {
-		jQuery("body").removeClass('boxed');
-		jQuery("body").addClass('boxed');
-		createCookie("is_boxed", 'true', 365);
-	} else {
-		jQuery("body").removeClass('boxed');
-		createCookie("is_boxed", '', -1);
-		jQuery('body').removeClass('transparent');
-	}
+// ========== BOXED MODE ==========
+document.querySelectorAll("input.boxed_switch").map((input) => {
+  input.addEventListener("click", () => {
+    const val = input.value;
+    if (val === "boxed") {
+      document.body.classList.add("boxed");
+      createCookie("is_boxed", "true", 365);
+    } else {
+      document.body.classList.remove("boxed", "transparent");
+      createCookie("is_boxed", "", -1);
+    }
+  });
 });
 
+// ========== SEPARATOR STYLE ==========
+document.querySelectorAll("input.separator_switch").map((input) => {
+  input.addEventListener("click", () => {
+    const val = input.value;
+    const classList = [
+      "skew",
+      "reversed-skew",
+      "double-diagonal",
+      "big-triangle",
+    ];
+    document.body.classList.remove(...classList);
 
-
-/**
-	SEPARATOR STYLE [Normal|Skew|Reversed Skew|Double Diagonal|Big Triangle]
-**/
-jQuery("input.separator_switch").bind("click", function() {
-	var separator_switch = jQuery(this).attr('value');
-
-	if(separator_switch == 'skew') {
-		jQuery("body").removeClass('reversed-skew');
-		jQuery("body").removeClass('double-diagonal');
-		jQuery("body").removeClass('big-triangle');
-		jQuery("body").addClass('skew');
-		createCookie("is_skew", 'true', 365);
-	}
-	
-	else if(separator_switch == 'reversed-skew') {
-		jQuery("body").removeClass('skew');
-		jQuery("body").removeClass('double-diagonal');
-		jQuery("body").removeClass('big-triangle');
-		jQuery("body").addClass('reversed-skew');
-		createCookie("is_reversed_skew", 'true', 365);
-	}
-	
-	else if(separator_switch == 'double-diagonal') {
-		jQuery("body").removeClass('skew');
-		jQuery("body").removeClass('reversed-skew');
-		jQuery("body").removeClass('big-triangle');
-		jQuery("body").addClass('double-diagonal');
-		createCookie("is_double_diagonal", 'true', 365);
-	}
-	
-	else if(separator_switch == 'big-triangle') {
-		jQuery("body").removeClass('skew');
-		jQuery("body").removeClass('reversed-skew');
-		jQuery("body").removeClass('double-diagonal');
-		jQuery("body").addClass('big-triangle');
-		createCookie("is_big_triangle", 'true', 365);
-	}
-	
-	else {
-		jQuery("body").removeClass('skew');
-		jQuery("body").removeClass('reversed-skew');
-		jQuery("body").removeClass('double-diagonal');
-		jQuery("body").removeClass('big-triangle');
-		createCookie("is_normal", '', -1);
-	}
+    switch (val) {
+      case "skew":
+        document.body.classList.add("skew");
+        createCookie("is_skew", "true", 365);
+        break;
+      case "reversed-skew":
+        document.body.classList.add("reversed-skew");
+        createCookie("is_reversed_skew", "true", 365);
+        break;
+      case "double-diagonal":
+        document.body.classList.add("double-diagonal");
+        createCookie("is_double_diagonal", "true", 365);
+        break;
+      case "big-triangle":
+        document.body.classList.add("big-triangle");
+        createCookie("is_big_triangle", "true", 365);
+        break;
+      default:
+        createCookie("is_normal", "", -1);
+    }
+  });
 });
